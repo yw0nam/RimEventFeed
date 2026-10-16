@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>RimEventFeed</AssemblyName>
+    <RootNamespace>RimEventFeed</RootNamespace>
+    <OutputPath>../../1.6/Assemblies/</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <!-- Default: compile against the Krafs reference package matching the installed build (1.6.4871). -->
+  <ItemGroup Condition="'$(UseLocalDlls)' != 'true'">
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4871" ExcludeAssets="runtime" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Alternative: compile against the installed game's Managed folder. -->
+  <PropertyGroup Condition="'$(UseLocalDlls)' == 'true'">
+    <ManagedDir>$(HOME)/Library/Application Support/Steam/steamapps/common/RimWorld/RimWorldMac.app/Contents/Resources/Data/Managed</ManagedDir>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(UseLocalDlls)' == 'true'">
+    <Reference Include="Assembly-CSharp" HintPath="$(ManagedDir)/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(ManagedDir)/UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="UnityEngine.IMGUIModule" HintPath="$(ManagedDir)/UnityEngine.IMGUIModule.dll" Private="false" />
+    <Reference Include="UnityEngine.TextRenderingModule" HintPath="$(ManagedDir)/UnityEngine.TextRenderingModule.dll" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.4.3" ExcludeAssets="runtime" PrivateAssets="all" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+</Project>
